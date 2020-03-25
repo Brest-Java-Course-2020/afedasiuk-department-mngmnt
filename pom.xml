@@ -30,6 +30,7 @@
         <hamcrest.version>1.3</hamcrest.version>
         <commons-lang3.version>3.8</commons-lang3.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
+        <hibernate-validator.version>6.1.2.Final</hibernate-validator.version>
     </properties>
 
     <distributionManagement>
@@ -134,9 +135,20 @@
                 <version>${validation-api.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>3.0.1-b08</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.9.8</version>
+                <version>2.9.10.3</version>
             </dependency>
 
             <dependency>
@@ -275,7 +287,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>3.1.12.2</version>
+                    <version>4.0.0</version>
                 </plugin>
 
                 <plugin>
@@ -294,6 +306,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.8.2</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
                 </plugin>
 
                 <plugin>
@@ -331,12 +349,14 @@
                         <id>validate</id>
                         <phase>validate</phase>
                         <configuration>
-                            <!--<configLocation>checkstyle.xml</configLocation>-->
+<!--                            <configLocation>checkstyle.xml</configLocation>-->
                             <encoding>UTF-8</encoding>
                             <consoleOutput>true</consoleOutput>
                             <failsOnError>false</failsOnError>
                             <failOnViolation>false</failOnViolation>
-                            <linkXRef>false</linkXRef>
+                            <logViolationsToConsole>true</logViolationsToConsole>
+                            <!-- change to 'error' to be more strict about following checkstyle conventions -->
+                            <violationSeverity>warn</violationSeverity>
                         </configuration>
                         <goals>
                             <goal>check</goal>
@@ -420,7 +440,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
                 <reportSets>
                     <reportSet>
                         <id>default</id>

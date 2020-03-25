@@ -12,7 +12,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static com.epam.brest.courses.constants.EmployeeConstants.*;
+import static com.epam.brest.courses.constants.EmployeeConstants.EMPLOYEE_EMAIL_SIZE;
+import static com.epam.brest.courses.constants.EmployeeConstants.EMPLOYEE_FIRSTNAME_SIZE;
+import static com.epam.brest.courses.constants.EmployeeConstants.EMPLOYEE_LASTNAME_SIZE;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -52,7 +54,7 @@ public class EmployeeDaoJdbcIT {
                 .setFirstname(RandomStringUtils.randomAlphabetic(EMPLOYEE_FIRSTNAME_SIZE))
                 .setLastname(RandomStringUtils.randomAlphabetic(EMPLOYEE_LASTNAME_SIZE))
                 .setEmail(RandomStringUtils.randomAlphabetic(EMPLOYEE_EMAIL_SIZE))
-                .setSalary(Double.valueOf(100))
+                .setSalary(100d)
                 .setDepartmentId(1);
         Integer id = employeeDao.create(employee);
 
@@ -74,7 +76,7 @@ public class EmployeeDaoJdbcIT {
                 .setFirstname(RandomStringUtils.randomAlphabetic(EMPLOYEE_FIRSTNAME_SIZE))
                 .setLastname(RandomStringUtils.randomAlphabetic(EMPLOYEE_LASTNAME_SIZE))
                 .setEmail(RandomStringUtils.randomAlphabetic(EMPLOYEE_EMAIL_SIZE))
-                .setSalary(Double.valueOf(100))
+                .setSalary(100d)
                 .setDepartmentId(1);
         Integer id = employeeDao.create(employee);
         assertNotNull(id);
@@ -88,7 +90,7 @@ public class EmployeeDaoJdbcIT {
                 .setFirstname(RandomStringUtils.randomAlphabetic(EMPLOYEE_FIRSTNAME_SIZE))
                 .setLastname(RandomStringUtils.randomAlphabetic(EMPLOYEE_LASTNAME_SIZE))
                 .setEmail(RandomStringUtils.randomAlphabetic(EMPLOYEE_EMAIL_SIZE))
-                .setSalary(Double.valueOf(100))
+                .setSalary(100d)
                 .setDepartmentId(1);
         Integer id = employeeDao.create(employee);
         assertNotNull(id);
@@ -119,7 +121,7 @@ public class EmployeeDaoJdbcIT {
                 .setFirstname(RandomStringUtils.randomAlphabetic(EMPLOYEE_FIRSTNAME_SIZE))
                 .setLastname(RandomStringUtils.randomAlphabetic(EMPLOYEE_LASTNAME_SIZE))
                 .setEmail(RandomStringUtils.randomAlphabetic(EMPLOYEE_EMAIL_SIZE))
-                .setSalary(Double.valueOf(100))
+                .setSalary(100d)
                 .setDepartmentId(1);
         Integer id = employeeDao.create(employee);
 
