@@ -17,9 +17,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
-import static com.epam.brest.courses.constants.DepartmentConstants.*;
+import static com.epam.brest.courses.constants.DepartmentConstants.COLUMN_DEPARTMENT_ID;
+import static com.epam.brest.courses.constants.DepartmentConstants.COLUMN_DEPARTMENT_NAME;
+import static com.epam.brest.courses.constants.DepartmentConstants.DEPARTMENT_ID;
+import static com.epam.brest.courses.constants.DepartmentConstants.DEPARTMENT_NAME;
 
 public class DepartmentDaoJdbc implements DepartmentDao {
 
@@ -81,10 +85,12 @@ public class DepartmentDaoJdbc implements DepartmentDao {
         params.addValue(DEPARTMENT_NAME, department.getDepartmentName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(createSql, params, keyHolder);
-        return keyHolder.getKey().intValue();
+        return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
+    @SuppressWarnings("ConstantConditions")
     private boolean isNameUnique(Department department) {
+
         return namedParameterJdbcTemplate.queryForObject(CHECK_COUNT_NAME,
                 new MapSqlParameterSource(DEPARTMENT_NAME, department.getDepartmentName()),
                 Integer.class) == 0;
@@ -109,7 +115,7 @@ public class DepartmentDaoJdbc implements DepartmentDao {
         return namedParameterJdbcTemplate.update(deleteSql, mapSqlParameterSource);
     }
 
-    private class DepartmentRowMapper implements RowMapper<Department> {
+    private static class DepartmentRowMapper implements RowMapper<Department> {
 
         @Override
         public Department mapRow(ResultSet resultSet, int i) throws SQLException {
