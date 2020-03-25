@@ -1,4 +1,4 @@
-package com.epam.brest.courses.rest_app;
+package com.epam.brest.courses.rest;
 
 import com.epam.brest.courses.model.dto.DepartmentDto;
 import com.epam.brest.courses.service.DepartmentDtoService;
