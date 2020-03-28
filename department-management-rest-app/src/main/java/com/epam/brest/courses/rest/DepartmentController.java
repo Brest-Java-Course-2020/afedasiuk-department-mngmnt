@@ -1,9 +1,7 @@
 package com.epam.brest.courses.rest;
 
 import com.epam.brest.courses.model.Department;
-import com.epam.brest.courses.model.dto.DepartmentDto;
 import com.epam.brest.courses.rest.exception.DepartmentNotFoundException;
-import com.epam.brest.courses.service.DepartmentDtoService;
 import com.epam.brest.courses.service.DepartmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +18,9 @@ public class DepartmentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
 
     private final DepartmentService departmentService;
-    private final DepartmentDtoService departmentDtoService;
 
-    public DepartmentController(DepartmentService departmentService, DepartmentDtoService departmentDtoService) {
+    public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
-        this.departmentDtoService = departmentDtoService;
     }
 
     /**
@@ -33,10 +29,10 @@ public class DepartmentController {
      * @return view name
      */
     @GetMapping(value = "/departments")
-    public final Collection<DepartmentDto> departments() {
+    public final Collection<Department> departments() {
 
         LOGGER.debug("departments()");
-        return departmentDtoService.findAllWithAvgSalary();
+        return departmentService.findAll();
     }
 
     @GetMapping("/departments/{id}")
