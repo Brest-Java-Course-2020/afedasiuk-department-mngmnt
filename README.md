@@ -51,6 +51,7 @@ curl --request GET 'http://localhost:8088/department_dtos' | json_pp
 ```
 curl --request GET 'http://localhost:8088/departments' | json_pp
 ```
+
 #### findById
 
 ```
@@ -83,4 +84,59 @@ curl --request PUT 'http://localhost:8088/departments' \
 
 ```
 curl --request DELETE 'http://localhost:8088/departments/3'
+```
+
+### employees
+
+#### findAll
+
+```
+curl --request GET 'http://localhost:8088/employees' | json_pp
+```
+
+### findById
+
+```
+curl --request GET 'http://localhost:8088/employees/1' | json_pp
+```
+
+### findByDepartmentId
+
+```
+curl --request GET 'http://localhost:8088/employees?departmentId=1' | json_pp
+```
+
+### create
+
+```
+curl --request POST 'http://localhost:8088/employees' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "firstname": "FUSER20",
+    "lastname": "LUSER20",
+    "email": "email20@mail.com",
+    "salary": 100,
+    "departmentId": 1
+}'
+```
+
+### update
+
+```
+curl --request PUT 'http://localhost:8088/employees' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "employeeId": 1,
+    "firstname": "FUSER10",
+    "lastname": "LUSER10 updated",
+    "email": "email10@mail.com",
+    "salary": 100.0,
+    "departmentId": 1
+}'
+```
+
+### delete
+
+```
+curl --request DELETE 'http://localhost:8088/employees/6'
 ```
