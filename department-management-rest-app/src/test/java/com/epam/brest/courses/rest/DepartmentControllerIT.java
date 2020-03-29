@@ -2,6 +2,7 @@ package com.epam.brest.courses.rest;
 
 import com.epam.brest.courses.model.Department;
 import com.epam.brest.courses.rest.exception.CustomExceptionHandler;
+import com.epam.brest.courses.rest.exception.ErrorResponse;
 import com.epam.brest.courses.service.DepartmentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -29,6 +30,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.epam.brest.courses.constants.DepartmentConstants.DEPARTMENT_NAME_SIZE;
+
+import static com.epam.brest.courses.rest.exception.CustomExceptionHandler.DEPARTMENT_NOT_FOUND;
+import static com.epam.brest.courses.rest.exception.CustomExceptionHandler.VALIDATION_ERROR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -149,6 +153,45 @@ public class DepartmentControllerIT {
         assertNotNull(currentDepartments);
 
         assertTrue(departments.size()-1 == currentDepartments.size());
+    }
+
+    @Test
+    public void shouldReturnDepartmentNotFoundError() throws Exception {
+
+        LOGGER.debug("shouldReturnDepartmentNotFoundError()");
+        MockHttpServletResponse response =
+                mockMvc.perform(MockMvcRequestBuilders.get(DEPARTMENTS_ENDPOINT + "/999999")
+                        .accept(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isNotFound())
+                        .andReturn().getResponse();
+        assertNotNull(response);
+        ErrorResponse errorResponse = objectMapper.readValue(response.getContentAsString(), ErrorResponse.class);
+        assertNotNull(errorResponse);
+        assertEquals(errorResponse.getMessage(), DEPARTMENT_NOT_FOUND);
+    }
+
+    @Test
+    public void shouldFailOnCreateDepartmentWithDuplicateName() throws Exception {
+        Department department1 = new Department()
+                .setDepartmentName(RandomStringUtils.randomAlphabetic(DEPARTMENT_NAME_SIZE));
+        Integer id = departmentService.create(department1);
+        assertNotNull(id);
+
+        Department department2 = new Department()
+                .setDepartmentName(department1.getDepartmentName());
+
+        MockHttpServletResponse response =
+                mockMvc.perform(post(DEPARTMENTS_ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(department2))
+                        .accept(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isUnprocessableEntity())
+                        .andReturn().getResponse();
+
+        assertNotNull(response);
+        ErrorResponse errorResponse = objectMapper.readValue(response.getContentAsString(), ErrorResponse.class);
+        assertNotNull(errorResponse);
+        assertEquals(errorResponse.getMessage(), VALIDATION_ERROR);
     }
 
     class MockMvcDepartmentService {
