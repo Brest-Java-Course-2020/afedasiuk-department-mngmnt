@@ -51,3 +51,30 @@ curl --request GET 'http://localhost:8088/department_dtos' | json_pp
 ```
 curl --request GET 'http://localhost:8088/departments' | json_pp
 ```
+#### findById
+
+```
+curl --request GET 'http://localhost:8088/departments/1' | json_pp
+```
+
+### create
+
+```
+curl --request POST 'http://localhost:8088/departments' \
+--header 'Accept: application/json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"departmentName": "JAVA"
+}'
+```
+
+## update
+
+```
+curl --request PUT 'http://localhost:8088/departments' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+   "departmentId": 4,
+   "departmentName": "Java"
+}'
+```
