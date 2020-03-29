@@ -78,3 +78,9 @@ curl --request PUT 'http://localhost:8088/departments' \
    "departmentName": "Java"
 }'
 ```
+
+## delete
+
+```
+curl --request DELETE 'http://localhost:8088/departments/3'
+```
